@@ -1,18 +1,17 @@
 package web.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "Person")
-public class Person {
+@Table(name = "users")
+public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Name should not be empty")
@@ -30,11 +29,11 @@ public class Person {
     @Email(message = "Email should be valid")
     private String email;
 
-    public Person() {
+    public User() {
 
     }
 
-    public Person(int id, String name,String lastname, int age, String email) {
+    public User(int id, String name, String lastname, int age, String email) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;

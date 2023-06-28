@@ -1,49 +1,46 @@
 package web.dao;
 
 import org.springframework.stereotype.Component;
-import web.models.Person;
-
-
+import web.models.User;
+import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * @author Neil Alishev
- */
 @Component
-public class PersonDAO implements UserDAO{
+public class UserDaoImp implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
-
-
     @Override
-    public List<Person> listUsers() {
-        TypedQuery<Person> query = entityManager.createQuery("select p from Person p", Person.class);
+    public List<User> listUsers() {
+        TypedQuery<User> query = entityManager.createQuery("select u from User u", User.class);
         return query.getResultList();
     }
 
     @Override
-    public Person findById(long id) {
-        return entityManager.find(Person.class, id);
+    public User findById(int id) {
+        return entityManager.find(User.class, id);
     }
 
     @Override
-    public void add(Person person) {
-        entityManager.persist(person);
+    @Transactional
+    public void add(User user) {
+        entityManager.persist(user);
     }
 
     @Override
-    public void update(Person person) {
-        entityManager.merge(person);
+    @Transactional
+    public void update(User user) {
+        entityManager.merge(user);
     }
 
     @Override
-    public void deleteById(long id) {
+    @Transactional
+    public void deleteById(int id) {
         entityManager.remove(findById(id));
     }
 }
